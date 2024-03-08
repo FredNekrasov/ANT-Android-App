@@ -6,60 +6,57 @@ import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontFamily
 import com.alexander_nevsky_temple.ui.navigation.TitleStrings
 import com.alexander_nevsky_temple.ui.utils.DataStrings
 
 @Composable
-fun FredButton(
-    onClick: Action,
-    text: String,
-    buttonColor: Color = MaterialTheme.colorScheme.primary,
-    textColor: Color = MaterialTheme.colorScheme.onPrimary
-) {
-    Button(onClick, colors = ButtonDefaults.buttonColors(buttonColor)) {
-        FredText(text,textColor)
+fun FredButton(onClick: Action,text: String) {
+    Button(onClick) {
+        FredText(text)
     }
 }
 @Composable
-fun FredText(
-    text: String,
-    textColor: Color = MaterialTheme.colorScheme.onPrimary
-) {
-    Text(text,color = textColor,fontFamily = FontFamily.Serif)
+fun FredText(text: String) {
+    Text(text,fontFamily = FontFamily.Serif)
 }
 @Composable
-fun FredTitle(
-    text: String,
-    textColor: Color = MaterialTheme.colorScheme.onPrimary,
-) {
-    Text(text,color = textColor, fontSize = MaterialTheme.typography.headlineMedium.fontSize, fontFamily = FontFamily.Serif)
+fun FredTitle(text: String) {
+    Text(text,fontSize = MaterialTheme.typography.headlineMedium.fontSize, fontFamily = FontFamily.Serif)
 }
 @Composable
-fun FredIconButton(
-    onClick: Action,
-    iconColor: Color = MaterialTheme.colorScheme.primary,
-    icon: ImageVector,
-    contentDescription: String
-    ) {
-    IconButton(onClick, colors = IconButtonDefaults.iconButtonColors(iconColor)) {
+fun FredIconButton(onClick: Action,icon: ImageVector,contentDescription: String) {
+    IconButton(onClick) {
         Icon(icon,contentDescription)
     }
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FredTopAppBar(
-    titleColor: Color,
-    openDrawer: Action,
-    iconColor: Color = MaterialTheme.colorScheme.background,
-    mainColor: Color = MaterialTheme.colorScheme.onBackground
-) {
+fun FredTopAppBar(openDrawer: Action) {
     TopAppBar(
-        title = { FredTitle(TitleStrings.MAIN_TITLE,titleColor) },
+        title = { FredTitle(TitleStrings.MAIN_TITLE) },
         Modifier.fillMaxWidth(),
-        navigationIcon = { FredIconButton(openDrawer,iconColor,Icons.Outlined.Menu,DataStrings.MENU) },
-        colors = TopAppBarDefaults.topAppBarColors(mainColor)
+        navigationIcon = { FredIconButton(openDrawer,Icons.Outlined.Menu,DataStrings.MENU) },
     )
+}
+@Composable
+fun FredNavigationDrawerItem(
+    text: String,
+    selected: Boolean,
+    onClick: Action,
+) {
+    NavigationDrawerItem(
+        label = { FredText(text) },
+        selected,
+        onClick,
+        Modifier.fillMaxWidth(),
+        shape = MaterialTheme.shapes.medium
+    )
+}
+@Composable
+fun FredFloatingActionButton(onClick: Action,icon: ImageVector,contentDescription: String) {
+    FloatingActionButton(onClick) {
+        Icon(icon,contentDescription)
+    }
 }
