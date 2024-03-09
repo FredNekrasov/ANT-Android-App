@@ -1,4 +1,4 @@
-package com.alexander_nevsky_temple.ui.presentation
+package com.alexander_nevsky_temple.presentation
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.DrawerValue.Closed

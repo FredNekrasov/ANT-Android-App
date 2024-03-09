@@ -1,8 +1,8 @@
-package com.alexander_nevsky_temple.ui.presentation
+package com.alexander_nevsky_temple.presentation
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.Contacts
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -17,7 +17,7 @@ fun MainScaffold(controller: NavController, openDrawer: Action) {
     Scaffold(
         modifier,
         topBar = { FredTopAppBar(openDrawer) },
-        floatingActionButton = { FredFloatingActionButton({ controller.navigate(ScreenRoute.Information.route) },Icons.Outlined.Info, INFORMATION) },
+        floatingActionButton = { FredFloatingActionButton({ controller.navigate(ScreenRoute.Information.route) },Icons.Outlined.Contacts, INFORMATION) },
         floatingActionButtonPosition = FabPosition.End
     ) { padding ->
         modifier.padding(padding)
