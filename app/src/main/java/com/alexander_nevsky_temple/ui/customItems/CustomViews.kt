@@ -1,29 +1,26 @@
 package com.alexander_nevsky_temple.ui.customItems
 
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.unit.dp
 import com.alexander_nevsky_temple.ui.navigation.TitleStrings
 import com.alexander_nevsky_temple.ui.utils.DataStrings
 
 @Composable
-fun FredButton(onClick: Action,text: String) {
-    Button(onClick) {
-        FredText(text)
-    }
+fun FredText(text: String,modifier: Modifier = Modifier) {
+    Text(text,modifier,fontFamily = FontFamily.Serif)
 }
 @Composable
-fun FredText(text: String) {
-    Text(text,fontFamily = FontFamily.Serif)
-}
-@Composable
-fun FredTitle(text: String) {
-    Text(text,fontSize = MaterialTheme.typography.headlineMedium.fontSize, fontFamily = FontFamily.Serif)
+fun FredTitle(text: String,modifier: Modifier = Modifier) {
+    Text(text,modifier,fontSize = MaterialTheme.typography.headlineMedium.fontSize, fontFamily = FontFamily.Serif)
 }
 @Composable
 fun FredIconButton(onClick: Action,icon: ImageVector,contentDescription: String) {
@@ -35,7 +32,7 @@ fun FredIconButton(onClick: Action,icon: ImageVector,contentDescription: String)
 @Composable
 fun FredTopAppBar(openDrawer: Action) {
     TopAppBar(
-        title = { FredTitle(TitleStrings.MAIN_TITLE) },
+        title = { FredText(TitleStrings.MAIN_TITLE) },
         Modifier.fillMaxWidth(),
         navigationIcon = { FredIconButton(openDrawer,Icons.Outlined.Menu,DataStrings.MENU) },
     )
@@ -58,5 +55,25 @@ fun FredNavigationDrawerItem(
 fun FredFloatingActionButton(onClick: Action,icon: ImageVector,contentDescription: String) {
     FloatingActionButton(onClick) {
         Icon(icon,contentDescription)
+    }
+}
+@Composable
+fun FredCard(
+    onClick: Action,
+    image: ComposeFun,
+    title: String,
+    date: String
+) {
+    Card(
+        onClick,
+        Modifier.fillMaxWidth().border(2.dp,Color.Black),
+        shape = MaterialTheme.shapes.small,
+        colors = CardDefaults.outlinedCardColors()
+    ) {
+        image()
+        Spacer(Modifier.height(4.dp))
+        FredTitle(title)
+        Spacer(Modifier.height(4.dp))
+        FredText(date)
     }
 }
