@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Alexander Nevsky Temple"
 include(":app")
+include(":data")
