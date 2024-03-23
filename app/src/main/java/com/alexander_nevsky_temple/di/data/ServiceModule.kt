@@ -11,12 +11,12 @@ val serviceModule = module {
         qualifier = named(DIStrings.ARTICLE_TYPE + DIStrings.SERVICE),
         createdAtStart = true
     ) {
-        IArticleTypeService.retrofit().create(IArticleTypeService::class.java)
+        IArticleTypeService.getService(DIStrings.BASE_URL)
     }
     single<IArticleService>(
         qualifier = named(DIStrings.ARTICLE + DIStrings.SERVICE),
         createdAtStart = true
     ) {
-        IArticleTypeService.retrofit().create(IArticleService::class.java)
+        IArticleService.getService(DIStrings.BASE_URL)
     }
 }
