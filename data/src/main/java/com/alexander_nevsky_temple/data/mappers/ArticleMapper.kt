@@ -8,5 +8,5 @@ fun ArticleDto.toModel() = Article(
     description,
     date,
     articleType.toModel(),
-    images
+    content
 )
