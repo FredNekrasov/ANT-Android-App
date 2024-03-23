@@ -30,8 +30,11 @@ android {
 }
 
 dependencies {
+    implementation(project(":domain"))
+
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+    implementation(libs.kotlinx.coroutines.core)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
