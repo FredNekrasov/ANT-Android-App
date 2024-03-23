@@ -9,10 +9,10 @@ interface IArticleTypeService {
     @GET("/api/ArticleType")
     suspend fun getDtoList(): List<ArticleTypeDto>?
     companion object {
-        private const val BASE_URL = "http://localhost:port"
-        fun retrofit() : Retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
+        fun getService(url: String) : IArticleTypeService = Retrofit.Builder()
+            .baseUrl(url)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+            .create(IArticleTypeService::class.java)
     }
 }
