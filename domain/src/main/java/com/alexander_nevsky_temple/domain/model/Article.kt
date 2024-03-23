@@ -5,6 +5,6 @@ data class Article(
     val description: String,
     val date: String,
     val articleType: ArticleType,
-    val images: List<String>,
+    val content: List<String>,
     val id: Int? = null
 )
