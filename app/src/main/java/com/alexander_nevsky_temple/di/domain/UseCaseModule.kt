@@ -1,9 +1,6 @@
 package com.alexander_nevsky_temple.di.domain
 
 import com.alexander_nevsky_temple.di.utils.DIStrings
-import com.alexander_nevsky_temple.domain.model.Article
-import com.alexander_nevsky_temple.domain.model.ArticleType
-import com.alexander_nevsky_temple.domain.repositories.IRepository
 import com.alexander_nevsky_temple.domain.useCases.article.GetArticlesUseCase
 import com.alexander_nevsky_temple.domain.useCases.articleType.GetArticleTypesUseCase
 import org.koin.core.qualifier.named
