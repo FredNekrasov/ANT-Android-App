@@ -35,6 +35,6 @@ fun MainEntryPoint(navItems : List<ArticleType>) {
                 }
             }
         }, drawerState = drawerState) {
-        MainScaffold(scope, controller, { scope.launch { drawerState.open() } }, navItems)
+        MainScaffold(controller, { scope.launch { drawerState.open() } }, navItems)
     }
 }
