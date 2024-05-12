@@ -8,38 +8,36 @@ import com.alexander_nevsky_temple.domain.utils.*
 import com.alexander_nevsky_temple.domain.utils.ActionStatus.*
 import com.alexander_nevsky_temple.domain.utils.ConnectionStatus.*
 import com.google.gson.JsonSyntaxException
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.*
 import retrofit2.HttpException
 import java.io.IOException
 
 class ArticleRepository(
     private val service : IArticleService
 ) : IRepository<Article> {
-    override suspend fun getList() : StateFlow<ActionStatus<Article>> {
-        val data = MutableStateFlow<ActionStatus<Article>>(Loading(emptyList()))
+    override fun getList() : Flow<ActionStatus<Article>> = flow {
+        emit(Loading(emptyList()))
         try {
             val contentDtoList = service.getContentList()
             val articleDtoList = service.getArticleList()
             when {
-                contentDtoList.isEmpty() || articleDtoList.isEmpty() -> data.emit(Error(emptyList(), NO_DATA))
+                contentDtoList.isEmpty() || articleDtoList.isEmpty() -> emit(Error(emptyList(), NO_DATA))
                 else -> {
                     val articles = articleDtoList.map {
                         val content = contentDtoList.filter { content -> content.articleId == it.id }.map { content -> content.data }
                         it.toModel(content)
                     }
-                    data.emit(Success(articles))
+                    emit(Success(articles))
                 }
             }
         } catch (e: HttpException) {
-            data.emit(Error(emptyList(), CONNECTION_ERROR))
+            emit(Error(emptyList(), CONNECTION_ERROR))
         } catch (e: IOException) {
-            data.emit(Error(emptyList(), NO_INTERNET))
+            emit(Error(emptyList(), NO_INTERNET))
         } catch (e: JsonSyntaxException) {
-            data.emit(Error(emptyList(), SERIALIZATION_ERROR))
+            emit(Error(emptyList(), SERIALIZATION_ERROR))
         } catch (e: Exception) {
-            data.emit(Error(emptyList(), UNKNOWN))
+            emit(Error(emptyList(), UNKNOWN))
         }
-        return data
     }
 }

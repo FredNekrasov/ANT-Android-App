@@ -8,31 +8,29 @@ import com.alexander_nevsky_temple.domain.utils.ActionStatus.*
 import com.alexander_nevsky_temple.domain.utils.ActionStatus
 import com.alexander_nevsky_temple.domain.utils.ConnectionStatus.*
 import com.google.gson.JsonSyntaxException
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.*
 import retrofit2.HttpException
 import java.io.IOException
 
 class ArticleTypeRepository(
     private val service: IArticleTypeService
 ) : IRepository<ArticleType> {
-    override suspend fun getList() : StateFlow<ActionStatus<ArticleType>> {
-        val data = MutableStateFlow<ActionStatus<ArticleType>>(Loading(emptyList()))
+    override fun getList() : Flow<ActionStatus<ArticleType>> = flow {
+        emit(Loading(emptyList()))
         try {
             val list = service.getArticleTypeList()
             when {
-                list.isEmpty() -> data.emit(Error(emptyList(), NO_DATA))
-                else -> data.emit(Success(list.map { it.toModel() }))
+                list.isEmpty() -> emit(Error(emptyList(), NO_DATA))
+                else -> emit(Success(list.map { it.toModel() }))
             }
         } catch (e: HttpException) {
-            data.emit(Error(emptyList(), CONNECTION_ERROR))
+            emit(Error(emptyList(), CONNECTION_ERROR))
         } catch (e: IOException) {
-            data.emit(Error(emptyList(), NO_INTERNET))
+            emit(Error(emptyList(), NO_INTERNET))
         } catch (e: JsonSyntaxException) {
-            data.emit(Error(emptyList(), SERIALIZATION_ERROR))
+            emit(Error(emptyList(), SERIALIZATION_ERROR))
         } catch (e: Exception) {
-            data.emit(Error(emptyList(), UNKNOWN))
+            emit(Error(emptyList(), UNKNOWN))
         }
-        return data
     }
 }
