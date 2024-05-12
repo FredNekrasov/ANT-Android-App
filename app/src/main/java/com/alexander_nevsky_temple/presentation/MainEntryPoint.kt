@@ -8,12 +8,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
+import com.alexander_nevsky_temple.domain.model.ArticleType
 import com.alexander_nevsky_temple.ui.customItems.FredNavigationDrawerItem
-import com.alexander_nevsky_temple.ui.utils.getNavItems
 import kotlinx.coroutines.launch
 
 @Composable
-fun MainEntryPoint() {
+fun MainEntryPoint(navItems : List<ArticleType>) {
     val controller = rememberNavController()
     val drawerState = rememberDrawerState(Closed)
     val scope = rememberCoroutineScope()
@@ -22,12 +22,12 @@ fun MainEntryPoint() {
         drawerContent = {
             ModalDrawerSheet {
                 Spacer(Modifier.height(16.dp))
-                getNavItems().forEachIndexed { index,item ->
+                navItems.forEachIndexed { index, item ->
                     FredNavigationDrawerItem(
-                        text = item.title,
+                        text = item.type,
                         selected = index == selectedItemIndex,
                         onClick = {
-                            controller.navigate(item.route.route)
+                            controller.navigate(item.type)
                             selectedItemIndex = index
                             scope.launch { drawerState.close() }
                         }
@@ -35,6 +35,6 @@ fun MainEntryPoint() {
                 }
             }
         }, drawerState = drawerState) {
-        MainScaffold(controller) { scope.launch { drawerState.open() } }
+        MainScaffold(scope, controller, { scope.launch { drawerState.open() } }, navItems)
     }
 }
