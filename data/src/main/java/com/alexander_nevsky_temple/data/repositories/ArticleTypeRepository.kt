@@ -5,7 +5,7 @@ import com.alexander_nevsky_temple.data.remote.services.IArticleTypeService
 import com.alexander_nevsky_temple.domain.model.ArticleType
 import com.alexander_nevsky_temple.domain.repositories.IRepository
 import com.alexander_nevsky_temple.domain.utils.ActionStatus.*
-import com.alexander_nevsky_temple.domain.utils.*
+import com.alexander_nevsky_temple.domain.utils.ActionStatus
 import com.alexander_nevsky_temple.domain.utils.ConnectionStatus.*
 import com.google.gson.JsonSyntaxException
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,10 +19,11 @@ class ArticleTypeRepository(
     override suspend fun getList() : StateFlow<ActionStatus<ArticleType>> {
         val data = MutableStateFlow<ActionStatus<ArticleType>>(Loading(emptyList()))
         try {
-            val list = service.getArticleTypeList() ?: throw NullPointerException()
-            data.emit(Success(list.map { it.toModel() }))
-        } catch (e: NullPointerException) {
-            data.emit(Error(emptyList(), NO_DATA))
+            val list = service.getArticleTypeList()
+            when {
+                list.isEmpty() -> data.emit(Error(emptyList(), NO_DATA))
+                else -> data.emit(Success(list.map { it.toModel() }))
+            }
         } catch (e: HttpException) {
             data.emit(Error(emptyList(), CONNECTION_ERROR))
         } catch (e: IOException) {

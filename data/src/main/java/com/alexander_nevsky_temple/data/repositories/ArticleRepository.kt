@@ -19,10 +19,18 @@ class ArticleRepository(
     override suspend fun getList() : StateFlow<ActionStatus<Article>> {
         val data = MutableStateFlow<ActionStatus<Article>>(Loading(emptyList()))
         try {
-            val list = service.getArticleList() ?: throw NullPointerException()
-            data.emit(Success(list.map { it.toModel() }))
-        } catch (e: NullPointerException) {
-            data.emit(Error(emptyList(), NO_DATA))
+            val contentDtoList = service.getContentList()
+            val articleDtoList = service.getArticleList()
+            when {
+                contentDtoList.isEmpty() || articleDtoList.isEmpty() -> data.emit(Error(emptyList(), NO_DATA))
+                else -> {
+                    val articles = articleDtoList.map {
+                        val content = contentDtoList.filter { content -> content.articleId == it.id }.map { content -> content.data }
+                        it.toModel(content)
+                    }
+                    data.emit(Success(articles))
+                }
+            }
         } catch (e: HttpException) {
             data.emit(Error(emptyList(), CONNECTION_ERROR))
         } catch (e: IOException) {
