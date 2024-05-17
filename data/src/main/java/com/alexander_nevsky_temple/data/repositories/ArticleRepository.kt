@@ -1,7 +1,6 @@
 package com.alexander_nevsky_temple.data.repositories
 
 import com.alexander_nevsky_temple.data.local.dao.*
-import com.alexander_nevsky_temple.data.local.entities.*
 import com.alexander_nevsky_temple.data.mappers.*
 import com.alexander_nevsky_temple.data.remote.dto.*
 import com.alexander_nevsky_temple.domain.model.Article
