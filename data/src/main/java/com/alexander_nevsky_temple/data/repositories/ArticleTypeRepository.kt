@@ -1,36 +1,41 @@
 package com.alexander_nevsky_temple.data.repositories
 
+import com.alexander_nevsky_temple.data.local.dao.ICatalogDao
+import com.alexander_nevsky_temple.data.mappers.toEntity
 import com.alexander_nevsky_temple.data.mappers.toModel
-import com.alexander_nevsky_temple.data.remote.services.IArticleTypeService
+import com.alexander_nevsky_temple.data.remote.dto.ArticleTypeDto
 import com.alexander_nevsky_temple.domain.model.ArticleType
 import com.alexander_nevsky_temple.domain.repositories.IRepository
 import com.alexander_nevsky_temple.domain.utils.ActionStatus.*
 import com.alexander_nevsky_temple.domain.utils.ActionStatus
 import com.alexander_nevsky_temple.domain.utils.ConnectionStatus.*
-import com.google.gson.JsonSyntaxException
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.plugins.*
+import io.ktor.client.request.get
 import kotlinx.coroutines.flow.*
-import retrofit2.HttpException
-import java.io.IOException
+import org.json.JSONException
 
 class ArticleTypeRepository(
-    private val service: IArticleTypeService
+    private val catalogDao: ICatalogDao,
+    private val client: HttpClient
 ) : IRepository<ArticleType> {
     override fun getList() : Flow<ActionStatus<ArticleType>> = flow {
-        emit(Loading(emptyList()))
-        try {
-            val list = service.getArticleTypeList()
-            when {
-                list.isEmpty() -> emit(Error(emptyList(), NO_DATA))
-                else -> emit(Success(list.map { it.toModel() }))
-            }
-        } catch (e: HttpException) {
-            emit(Error(emptyList(), CONNECTION_ERROR))
-        } catch (e: IOException) {
-            emit(Error(emptyList(), NO_INTERNET))
-        } catch (e: JsonSyntaxException) {
-            emit(Error(emptyList(), SERIALIZATION_ERROR))
-        } catch (e: Exception) {
-            emit(Error(emptyList(), UNKNOWN))
+        val articleTypes = catalogDao.getAll().map { it.toModel() }
+        emit(Loading(articleTypes))
+        val catalogs = client.get("/api/v2/catalog").body<List<ArticleTypeDto>?>() ?: emptyList()
+        if(catalogs.isEmpty()) emit(Error(articleTypes, NO_DATA))
+        else {
+            catalogs.forEach { catalogDao.insert(it.toEntity()) }
+            emit(Success(catalogs.map { it.toModel() }))
+        }
+    }.catch { ex ->
+        val articleTypes = catalogDao.getAll().map { it.toModel() }
+        when(ex) {
+            is ServerResponseException -> emit(Error(articleTypes, CONNECTION_ERROR))
+            is ClientRequestException -> emit(Error(articleTypes, NO_INTERNET))
+            is JSONException -> emit(Error(articleTypes, SERIALIZATION_ERROR))
+            else -> emit(Error(articleTypes, UNKNOWN))
         }
     }
 }
