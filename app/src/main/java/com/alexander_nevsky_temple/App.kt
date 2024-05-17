@@ -1,8 +1,7 @@
 package com.alexander_nevsky_temple
 
 import android.app.Application
-import com.alexander_nevsky_temple.di.data.repositoryModule
-import com.alexander_nevsky_temple.di.data.serviceModule
+import com.alexander_nevsky_temple.data.di.dataModule
 import com.alexander_nevsky_temple.di.domain.useCaseModule
 import com.alexander_nevsky_temple.di.presentation.vmModule
 import org.koin.android.ext.koin.androidContext
@@ -15,7 +14,7 @@ class App : Application() {
         startKoin {
             androidContext(this@App)
             androidLogger()
-            modules(serviceModule, repositoryModule, useCaseModule, vmModule)
+            modules(dataModule, useCaseModule, vmModule)
         }
     }
 }
