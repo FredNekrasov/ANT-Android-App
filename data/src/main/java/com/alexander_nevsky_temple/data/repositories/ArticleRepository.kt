@@ -1,43 +1,42 @@
 package com.alexander_nevsky_temple.data.repositories
 
-import com.alexander_nevsky_temple.data.mappers.toModel
-import com.alexander_nevsky_temple.data.remote.services.IArticleService
+import com.alexander_nevsky_temple.data.local.dao.*
+import com.alexander_nevsky_temple.data.mappers.*
+import com.alexander_nevsky_temple.data.remote.dto.*
 import com.alexander_nevsky_temple.domain.model.Article
 import com.alexander_nevsky_temple.domain.repositories.IRepository
 import com.alexander_nevsky_temple.domain.utils.*
 import com.alexander_nevsky_temple.domain.utils.ActionStatus.*
 import com.alexander_nevsky_temple.domain.utils.ConnectionStatus.*
-import com.google.gson.JsonSyntaxException
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.plugins.*
+import io.ktor.client.request.get
 import kotlinx.coroutines.flow.*
-import retrofit2.HttpException
-import java.io.IOException
+import org.json.JSONException
 
 class ArticleRepository(
-    private val service : IArticleService
+    private val articleDao: IArticleDao,
+    private val client: HttpClient
 ) : IRepository<Article> {
     override fun getList() : Flow<ActionStatus<Article>> = flow {
-        emit(Loading(emptyList()))
-        try {
-            val contentDtoList = service.getContentList()
-            val articleDtoList = service.getArticleList()
-            when {
-                contentDtoList.isEmpty() || articleDtoList.isEmpty() -> emit(Error(emptyList(), NO_DATA))
-                else -> {
-                    val articles = articleDtoList.map {
-                        val content = contentDtoList.filter { content -> content.articleId == it.id }.map { content -> content.data }
-                        it.toModel(content)
-                    }
-                    emit(Success(articles))
-                }
+        val articleList = articleDao.getAll().map { it.toModel() }
+        emit(Loading(articleList))
+        if(articleList.isEmpty()) {
+            val articleDtoList = client.get("/api/v1/chapter").body<List<ArticleDto>?>() ?: emptyList()
+            if(articleDtoList.isEmpty()) emit(Error(articleList, NO_DATA))
+            else {
+                articleDtoList.forEach { articleDao.insert(it.toEntity()) }
+                emit(Success(articleDtoList.map { it.toModel() }))
             }
-        } catch (e: HttpException) {
-            emit(Error(emptyList(), CONNECTION_ERROR))
-        } catch (e: IOException) {
-            emit(Error(emptyList(), NO_INTERNET))
-        } catch (e: JsonSyntaxException) {
-            emit(Error(emptyList(), SERIALIZATION_ERROR))
-        } catch (e: Exception) {
-            emit(Error(emptyList(), UNKNOWN))
+        }
+    }.catch { ex ->
+        val articleList = articleDao.getAll().map { it.toModel() }
+        when(ex) {
+            is ServerResponseException -> emit(Error(articleList, CONNECTION_ERROR))
+            is ClientRequestException -> emit(Error(articleList, NO_INTERNET))
+            is JSONException -> emit(Error(articleList, SERIALIZATION_ERROR))
+            else -> emit(Error(articleList, UNKNOWN))
         }
     }
 }
