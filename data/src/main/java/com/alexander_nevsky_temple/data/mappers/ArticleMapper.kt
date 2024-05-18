@@ -7,13 +7,12 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 fun ArticleDto.toEntity() = ArticleEntity(
-    title, description, dateOrBanner, Json.encodeToString(catalog), Json.encodeToString(content), id
+    title, description, dateOrBanner, catalog.name, Json.encodeToString(content), id
 )
 fun ArticleDto.toModel() = Article(
-    title, description, dateOrBanner, catalog.toModel(), content
+    title, description, dateOrBanner, catalog.name, content
 )
 fun ArticleEntity.toModel() = Article(
-    title, description, dateOrBanner,
-    Json.decodeFromString<Catalog>(catalog).toModel(),
+    title, description, dateOrBanner, catalog,
     Json.decodeFromString<List<String>>(content)
 )
