@@ -8,5 +8,4 @@ object DIStrings {
     const val VIEWMODEL = "viewmodel"
 
     const val ARTICLE = "article"
-    const val ARTICLE_TYPE = "articleType"
 }
