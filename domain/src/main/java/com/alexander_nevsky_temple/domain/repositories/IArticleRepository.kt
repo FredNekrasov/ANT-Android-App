@@ -5,5 +5,5 @@ import com.alexander_nevsky_temple.domain.utils.ActionStatus
 import kotlinx.coroutines.flow.Flow
 
 interface IArticleRepository {
-    fun getList(type: String) : Flow<ActionStatus<Article>>
+    fun getList() : Flow<ActionStatus<Article>>
 }
