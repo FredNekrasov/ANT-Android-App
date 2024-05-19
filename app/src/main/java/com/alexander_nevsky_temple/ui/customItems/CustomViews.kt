@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import coil.compose.AsyncImage
@@ -81,7 +82,7 @@ fun FredCard(onClick: () -> Unit, uri: String?, title: String, date: String, mod
     ) {
         if(!uri.isNullOrBlank()) AsyncImage(model = uri.toUri(), contentDescription = title, modifier = Modifier.fillMaxWidth().height(250.dp))
         Spacer(Modifier.height(4.dp))
-        FredText(title, modifier = Modifier.align(Alignment.CenterHorizontally))
+        Text(title, Modifier.align(Alignment.CenterHorizontally), fontFamily = FontFamily.Serif, textAlign = TextAlign.Center, overflow = TextOverflow.Ellipsis, maxLines = 1)
         Spacer(Modifier.height(4.dp))
         FredText(date, modifier = Modifier.align(Alignment.End))
     }

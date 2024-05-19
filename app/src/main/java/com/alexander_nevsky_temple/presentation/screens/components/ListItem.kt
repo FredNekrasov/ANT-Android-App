@@ -19,12 +19,12 @@ fun ListItem(
     article: Article
 ) {
     LazyColumn(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
-        item { ListItemDetails(article, Modifier.fillMaxWidth()) }
+        item { ListItemDetails(article, Modifier.wrapContentSize().padding(8.dp)) }
         item {
             Box(Modifier.fillMaxWidth()) {
                 FredIconButton(
                     onClick = { isShowDialog(false) }, icon = Icons.Default.Close, description = article.title,
-                    modifier = Modifier.align(Alignment.BottomEnd).padding(8.dp).border(2.dp, MaterialTheme.colorScheme.error, MaterialTheme.shapes.medium)
+                    modifier = Modifier.align(Alignment.BottomCenter).padding(8.dp).border(2.dp, MaterialTheme.colorScheme.error, MaterialTheme.shapes.medium)
                 )
             }
         }

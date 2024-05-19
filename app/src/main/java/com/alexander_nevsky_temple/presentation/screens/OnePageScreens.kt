@@ -23,7 +23,7 @@ fun MainScreen(vm: ArticleVM) {
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(8.dp)) {
         vm.articlesSF.collectAsState().value.list.forEach {
             if(it.articleType != Strings.MAIN) return@forEach
-            ListItemDetails(it, Modifier.fillMaxWidth())
+            ListItemDetails(it, Modifier.wrapContentSize())
         }
     }
 }
@@ -32,7 +32,7 @@ fun Priesthood(vm: ArticleVM) {
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(8.dp)) {
         vm.articlesSF.collectAsState().value.list.forEach {
             if(it.articleType != Strings.PRIESTHOOD) return@forEach
-            ListItemDetails(it, Modifier.fillMaxWidth())
+            ListItemDetails(it, Modifier.wrapContentSize())
         }
     }
 }
@@ -79,7 +79,7 @@ fun Volunteerism(vm: ArticleVM) {
     Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(8.dp)) {
         vm.articlesSF.collectAsState().value.list.forEach {
             if(it.articleType != Strings.VOLUNTEERISM) return@forEach
-            ListItemDetails(article = it)
+            ListItemDetails(article = it, Modifier.wrapContentSize())
         }
     }
 }
