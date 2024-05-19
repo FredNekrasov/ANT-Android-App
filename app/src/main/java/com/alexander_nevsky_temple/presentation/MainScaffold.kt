@@ -9,27 +9,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.alexander_nevsky_temple.domain.model.ArticleType
 import com.alexander_nevsky_temple.ui.customItems.*
 
 @Composable
 fun MainScaffold(
-    controller : NavHostController,
-    openDrawer : Action,
-    navItems : List<ArticleType>
+    controller: NavHostController,
+    openDrawer: () -> Unit,
+    navItems: List<String>
 ) {
     val modifier = Modifier.fillMaxSize()
     val currentRoute = controller.currentBackStackEntryAsState().value?.destination?.route
     Scaffold(
         modifier,
         topBar = { FredTopAppBar(openDrawer) },
-        floatingActionButton = { if(currentRoute != navItems[3].type) FredFloatingActionButton({ controller.navigate(navItems[3].type) }, Icons.Outlined.CalendarMonth, navItems[3].type) },
+        floatingActionButton = { if(currentRoute != navItems[2]) FredFloatingActionButton({ controller.navigate(navItems[2]) }, Icons.Outlined.CalendarMonth) },
         floatingActionButtonPosition = FabPosition.End
     ) { padding ->
-        MainNavHost(
-            controller,
-            navItems,
-            modifier.padding(padding)
-        )
+        MainNavHost(controller, navItems, modifier.padding(padding))
     }
 }
