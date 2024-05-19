@@ -7,7 +7,7 @@ import com.alexander_nevsky_temple.data.local.entities.*
 
 @Database(
     entities = [ArticleEntity::class],
-    version = 1,
+    version = 4,
     exportSchema = false
 )
 abstract class ANTDb : RoomDatabase() {
