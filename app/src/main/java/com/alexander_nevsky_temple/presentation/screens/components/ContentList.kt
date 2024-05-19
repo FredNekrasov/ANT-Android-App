@@ -30,6 +30,6 @@ fun ContentList(
         }
     }
     if(isShowDialog) {
-        ListItemDialog(isShowDialog = { isShowDialog = it }, article = state.list[articleIndex])
+        ListItem(isShowDialog = { isShowDialog = it }, article = state.list[articleIndex])
     }
 }
