@@ -6,7 +6,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.core.net.toUri
 import com.alexander_nevsky_temple.domain.model.Article
 import com.alexander_nevsky_temple.domain.utils.ActionStatus
 import com.alexander_nevsky_temple.ui.customItems.FredCard
