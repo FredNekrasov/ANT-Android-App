@@ -1,28 +1,32 @@
 package com.alexander_nevsky_temple.presentation.screens.components
 
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.alexander_nevsky_temple.domain.model.Article
-import com.alexander_nevsky_temple.ui.customItems.FredText
-import com.alexander_nevsky_temple.ui.customItems.FredTitle
+import com.alexander_nevsky_temple.ui.customItems.FredIconButton
 
 @Composable
 fun ListItem(
-    article: Article,
-    modifier: Modifier = Modifier
+    isShowDialog: (Boolean) -> Unit,
+    article: Article
 ) {
-    Column(modifier, Arrangement.Top, Alignment.CenterHorizontally) {
-        FredTitle(article.articleType)
-        Spacer(Modifier.height(8.dp))
-        FredTitle(article.title)
-        Spacer(Modifier.height(2.dp))
-        FredText(article.date, modifier = Modifier.wrapContentSize().align(Alignment.End))
-        Spacer(Modifier.height(4.dp))
-        ImageSlider(article = article, Modifier.fillMaxWidth())
-        Spacer(Modifier.height(4.dp))
-        FredText(article.description)
+    LazyColumn(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+        item { ListItemDetails(article, Modifier.fillMaxWidth()) }
+        item {
+            Box(Modifier.fillMaxWidth()) {
+                FredIconButton(
+                    onClick = { isShowDialog(false) }, icon = Icons.Default.Close, description = article.title,
+                    modifier = Modifier.align(Alignment.BottomEnd).padding(8.dp).border(2.dp, MaterialTheme.colorScheme.error, MaterialTheme.shapes.medium)
+                )
+            }
+        }
     }
 }
