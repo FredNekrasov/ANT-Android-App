@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.lifecycleScope
 import com.alexander_nevsky_temple.presentation.MainEntryPoint
 import com.alexander_nevsky_temple.ui.customItems.Strings
 import com.alexander_nevsky_temple.ui.theme.AlexanderNevskyTempleTheme
