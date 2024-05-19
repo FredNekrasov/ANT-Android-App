@@ -8,5 +8,5 @@ import kotlinx.coroutines.flow.*
 class GetArticlesUseCase(
     private val repository: IArticleRepository
 ) {
-    operator fun invoke(type: String): Flow<ActionStatus<Article>> = repository.getList(type)
+    operator fun invoke(): Flow<ActionStatus<Article>> = repository.getList()
 }
