@@ -1,8 +1,10 @@
 package com.alexander_nevsky_temple.presentation.screens.components
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -17,8 +19,7 @@ fun ImageSlider(
 ) {
     LazyRow(modifier, horizontalArrangement = Arrangement.SpaceEvenly) {
         items(article.content) { photo ->
-            AsyncImage(model = photo.toUri(), contentDescription = article.title, Modifier.height(250.dp))
-            Spacer(Modifier.width(8.dp))
+            AsyncImage(model = photo.toUri(), contentDescription = article.title, Modifier.height(250.dp).border(2.dp, MaterialTheme.colorScheme.background))
         }
     }
 }
