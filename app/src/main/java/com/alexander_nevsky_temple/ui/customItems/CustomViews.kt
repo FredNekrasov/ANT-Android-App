@@ -6,15 +6,17 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
+import coil.compose.AsyncImage
 
 @Composable
-fun FredText(text : String, modifier : Modifier = Modifier) {
+fun FredText(text: String, modifier: Modifier = Modifier) {
     Text(
         text,
         modifier,
@@ -24,31 +26,32 @@ fun FredText(text : String, modifier : Modifier = Modifier) {
     )
 }
 @Composable
-fun FredTitle(text : String, modifier : Modifier = Modifier) {
+fun FredTitle(text: String) {
     Text(
         text,
-        modifier,
+        Modifier.fillMaxWidth(),
         fontSize = MaterialTheme.typography.headlineMedium.fontSize,
-        fontFamily = FontFamily.Serif
+        fontFamily = FontFamily.Serif,
+        textAlign = TextAlign.Center
     )
 }
 @Composable
-fun FredIconButton(onClick : Action, icon : ImageVector, description : String) {
-    IconButton(onClick) {
+fun FredIconButton(onClick: () -> Unit, icon: ImageVector, description: String, modifier: Modifier = Modifier) {
+    IconButton(onClick, modifier) {
         Icon(icon, description)
     }
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FredTopAppBar(openDrawer: Action) {
+fun FredTopAppBar(openDrawer: () -> Unit) {
     TopAppBar(
         title = { FredText(Strings.MAIN_TITLE) },
-        Modifier.fillMaxWidth(),
-        navigationIcon = { FredIconButton(openDrawer, Icons.Outlined.Menu, Strings.MENU) },
+        Modifier.fillMaxWidth().border(1.dp, MaterialTheme.colorScheme.primary),
+        navigationIcon = { FredIconButton(openDrawer, Icons.Outlined.Menu, Strings.MENU) }
     )
 }
 @Composable
-fun FredNavigationDrawerItem(text : String, selected : Boolean, onClick : Action) {
+fun FredNavigationDrawerItem(text: String, selected: Boolean, onClick: () -> Unit) {
     NavigationDrawerItem(
         label = { FredText(text) },
         selected,
@@ -59,23 +62,23 @@ fun FredNavigationDrawerItem(text : String, selected : Boolean, onClick : Action
     )
 }
 @Composable
-fun FredFloatingActionButton(onClick : Action, icon : ImageVector, description : String) {
-    FloatingActionButton(onClick) {
-        Icon(icon, description)
+fun FredFloatingActionButton(onClick: () -> Unit, icon: ImageVector) {
+    FloatingActionButton(onClick, Modifier.border(1.dp, MaterialTheme.colorScheme.primary, MaterialTheme.shapes.medium)) {
+        Icon(icon, Strings.SCHEDULE)
     }
 }
 @Composable
-fun FredCard(onClick : Action, content : ComposeFun, title : String, date : String) {
+fun FredCard(onClick: () -> Unit, uri: String?, title: String, date: String, modifier: Modifier = Modifier) {
     Card(
         onClick,
-        Modifier.fillMaxWidth().border(2.dp, Color.Black),
+        modifier,
         shape = MaterialTheme.shapes.small,
         colors = CardDefaults.outlinedCardColors()
     ) {
-        content()
+        if(!uri.isNullOrBlank()) AsyncImage(model = uri.toUri(), contentDescription = title, modifier = Modifier.fillMaxWidth())
         Spacer(Modifier.height(4.dp))
-        FredTitle(title)
+        FredText(title, modifier = Modifier.align(Alignment.CenterHorizontally))
         Spacer(Modifier.height(4.dp))
-        FredText(date)
+        FredText(date, modifier = Modifier.align(Alignment.End))
     }
 }
