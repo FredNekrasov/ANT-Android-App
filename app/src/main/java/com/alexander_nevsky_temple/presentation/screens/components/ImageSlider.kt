@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
@@ -17,9 +18,9 @@ fun ImageSlider(
     article: Article,
     modifier: Modifier = Modifier
 ) {
-    LazyRow(modifier, horizontalArrangement = Arrangement.SpaceEvenly) {
+    LazyRow(modifier, horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
         items(article.content) { photo ->
-            AsyncImage(model = photo.toUri(), contentDescription = article.title, Modifier.height(250.dp).border(2.dp, MaterialTheme.colorScheme.background))
+            AsyncImage(model = photo.toUri(), contentDescription = article.title, Modifier.height(300.dp).border(2.dp, MaterialTheme.colorScheme.background))
         }
     }
 }
