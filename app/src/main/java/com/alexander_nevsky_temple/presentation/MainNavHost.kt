@@ -12,6 +12,8 @@ import androidx.navigation.compose.composable
 import com.alexander_nevsky_temple.data.di.utils.DIStrings
 import com.alexander_nevsky_temple.presentation.screens.*
 import com.alexander_nevsky_temple.presentation.viewModels.ArticleVM
+import com.alexander_nevsky_temple.ui.customItems.SAction
+import com.alexander_nevsky_temple.ui.customItems.SSAction
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.qualifier.qualifier
 
@@ -19,6 +21,8 @@ import org.koin.core.qualifier.qualifier
 fun MainNavHost(
     controller: NavHostController,
     navItems: List<String>,
+    openWebsite: SAction,
+    openSomeApp: SSAction,
     modifier: Modifier = Modifier,
     articleVM: ArticleVM = koinViewModel(qualifier(DIStrings.ARTICLE + DIStrings.VIEWMODEL))
 ) {
@@ -27,14 +31,14 @@ fun MainNavHost(
             composable(navItems[0]) { MainScreen(articleVM) }
             composable(navItems[1]) { ParishLife(articleVM) }
             composable(navItems[2]) { Schedule(articleVM) }
-            composable(navItems[3]) { Box(modifier) { CircularProgressIndicator(Modifier.align(Alignment.Center)) } } // spirit talk https://hramalnevskogo.ru/page40967215.html
+            composable(navItems[3]) { Box(modifier) { CircularProgressIndicator(Modifier.align(Alignment.Center)) } }
             composable(navItems[4]) { YouthClub(articleVM) }
             composable(navItems[5]) { Priesthood(articleVM) }
             composable(navItems[6]) { Advices(articleVM) }
             composable(navItems[7]) { History(articleVM) }
             composable(navItems[8]) { Sacraments(articleVM) }
-            composable(navItems[9]) { Contacts(articleVM) }
-            composable(navItems[10]) { Box(modifier) { LinearProgressIndicator(Modifier.align(Alignment.Center)) } } // information https://hramalnevskogo.ru/page42533272.html
+            composable(navItems[9]) { Contacts(articleVM, openWebsite, openSomeApp) }
+            composable(navItems[10]) { Box(modifier) { LinearProgressIndicator(Modifier.align(Alignment.Center)) } }
             composable(navItems[11]) { Volunteerism(articleVM) }
         }
     }
