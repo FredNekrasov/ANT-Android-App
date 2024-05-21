@@ -22,4 +22,13 @@ object Strings {
     const val CONTACTS = "Контакты"
     const val INFORMATION = "Информация"
     const val VOLUNTEERISM = "Приходская добровольческая служба"
+    val SCREEN_ROUTES = listOf(MAIN, PARISH_LIFE, SCHEDULE, SPIRITUAL_TALKS, YOUTH_CLUB, PRIESTHOOD, ADVICES, HISTORY, SACRAMENTS, CONTACTS, INFORMATION, VOLUNTEERISM)
+    // URLs
+    const val SPIRITUAL_TALKS_URL = "https://hramalnevskogo.ru/page40967215.html"
+    const val INFORMATION_URL = "https://hramalnevskogo.ru/page42533272.html"
+    // other
+    const val PHONE = "Телефон"
+    const val EMAIL = "Электронная почта"
+    const val TELEGRAM = "Телеграм"
+    const val VK = "VK"
 }
