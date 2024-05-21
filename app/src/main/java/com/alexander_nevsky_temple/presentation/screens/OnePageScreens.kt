@@ -1,9 +1,10 @@
 package com.alexander_nevsky_temple.presentation.screens
 
+import android.content.Intent
 import android.widget.TextView
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -23,7 +24,7 @@ fun MainScreen(vm: ArticleVM) {
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(8.dp)) {
         vm.articlesSF.collectAsState().value.list.forEach {
             if(it.articleType != Strings.MAIN) return@forEach
-            ListItemDetails(it, Modifier.wrapContentSize())
+            ListItemDetails(it, Modifier.fillMaxWidth())
         }
     }
 }
@@ -32,13 +33,13 @@ fun Priesthood(vm: ArticleVM) {
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(8.dp)) {
         vm.articlesSF.collectAsState().value.list.forEach {
             if(it.articleType != Strings.PRIESTHOOD) return@forEach
-            ListItemDetails(it, Modifier.wrapContentSize())
+            ListItemDetails(it, Modifier.fillMaxWidth())
         }
     }
 }
 @Composable
 fun Schedule(vm: ArticleVM) {
-    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()), Arrangement.Center) {
+    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
         vm.articlesSF.collectAsState().value.list.forEach {
             if(it.articleType != Strings.SCHEDULE) return@forEach
             AsyncImage(model = it.title.toUri(), contentDescription = it.title, modifier = Modifier.fillMaxWidth())
@@ -57,8 +58,8 @@ fun Sacraments(vm: ArticleVM) {
     }
 }
 @Composable
-fun Contacts(vm: ArticleVM) {
-    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(8.dp)) {
+fun Contacts(vm: ArticleVM, openWebsite: SAction, openSomeApp: SSAction) {
+    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(8.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         val state = vm.articlesSF.collectAsState().value
         state.list.forEach {
             if(it.articleType != Strings.CONTACTS) return@forEach
@@ -70,8 +71,20 @@ fun Contacts(vm: ArticleVM) {
                     setTextColor(resources.getColor(R.color.black, null))
                     textAlignment = TextView.TEXT_ALIGNMENT_CENTER
                 }
-            }, Modifier.fillMaxWidth().align(Alignment.CenterHorizontally))
+            }, Modifier.fillMaxWidth())
+            Spacer(modifier = Modifier.height(8.dp))
+            ContactsCard(contentList = it.content,openWebsite, openSomeApp)
         }
+    }
+}
+@Composable
+private fun ContactsCard(contentList: List<String>, openWebsite: SAction, openSomeApp: SSAction) {
+    val ftbModifier = Modifier.wrapContentSize().border(1.dp, MaterialTheme.colorScheme.onBackground)
+    Row(Modifier.fillMaxWidth().wrapContentHeight(), Arrangement.SpaceEvenly, Alignment.CenterVertically) {
+        FredTButton({ openWebsite(contentList.getNotNull(0)) }, Strings.TELEGRAM, ftbModifier)
+        FredTButton({ openWebsite(contentList.getNotNull(1)) }, Strings.VK, ftbModifier)
+        FredTButton({ openSomeApp(Intent.ACTION_DIAL, contentList.getNotNull(2)) }, Strings.PHONE, ftbModifier)
+        FredTButton({ openSomeApp(Intent.ACTION_VIEW, contentList.getNotNull(3)) }, Strings.EMAIL, ftbModifier)
     }
 }
 @Composable
@@ -79,7 +92,7 @@ fun Volunteerism(vm: ArticleVM) {
     Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(8.dp)) {
         vm.articlesSF.collectAsState().value.list.forEach {
             if(it.articleType != Strings.VOLUNTEERISM) return@forEach
-            ListItemDetails(article = it, Modifier.wrapContentSize())
+            ListItemDetails(article = it, Modifier.fillMaxWidth())
         }
     }
 }
