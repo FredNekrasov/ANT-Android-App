@@ -14,7 +14,7 @@ import com.alexander_nevsky_temple.ui.customItems.*
 import kotlinx.coroutines.launch
 
 @Composable
-fun MainEntryPoint(openSomeApp: SAction, navItems: List<String> = Strings.SCREEN_ROUTES) {
+fun MainEntryPoint(navItems: List<String>, openSomeApp: SAction) {
     val controller = rememberNavController()
     val drawerState = rememberDrawerState(Closed)
     val scope = rememberCoroutineScope()
@@ -27,20 +27,21 @@ fun MainEntryPoint(openSomeApp: SAction, navItems: List<String> = Strings.SCREEN
     ModalNavigationDrawer(
         drawerContent = {
             ModalDrawerSheet {
-                Spacer(Modifier.height(16.dp))
-                navItems.forEachIndexed { index, route ->
-                    FredNavigationDrawerItem(
-                        text = route,
-                        selected = index == selectedItemIndex,
-                        onClick = { 
-                            when(index) {
-                                3 -> openSomeApp(Strings.SPIRITUAL_TALKS_URL)
-                                10 -> openSomeApp(Strings.INFORMATION_URL)
-                                else -> navigateTo(index, route)
+                Column(Modifier.fillMaxSize(), Arrangement.Center) {
+                    navItems.forEachIndexed { index, route ->
+                        FredNavigationDrawerItem(
+                            text = route,
+                            selected = index == selectedItemIndex,
+                            onClick = {
+                                when(index) {
+                                    3 -> openSomeApp(Info.SPIRITUAL_TALKS_URL)
+                                    10 -> openSomeApp(Info.INFORMATION_URL)
+                                    else -> navigateTo(index, route)
+                                }
                             }
-                        }
-                    )
-                    Spacer(Modifier.height(2.dp))
+                        )
+                        Spacer(Modifier.height(2.dp))
+                    }
                 }
             }
         }, drawerState = drawerState) {
@@ -49,7 +50,6 @@ fun MainEntryPoint(openSomeApp: SAction, navItems: List<String> = Strings.SCREEN
             Modifier.fillMaxSize(),
             topBar = { FredTopAppBar { scope.launch { drawerState.open() } } },
             floatingActionButton = { if(currentRoute != navItems[2]) FredFloatingActionButton({ navigateTo(2, navItems[2]) }, Icons.Outlined.CalendarMonth) },
-            floatingActionButtonPosition = FabPosition.End
         ) { padding ->
             MainNavHost(controller, navItems, openSomeApp, Modifier.fillMaxSize().padding(padding))
         }
