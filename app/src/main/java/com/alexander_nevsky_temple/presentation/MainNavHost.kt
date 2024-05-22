@@ -13,7 +13,6 @@ import com.alexander_nevsky_temple.data.di.utils.DIStrings
 import com.alexander_nevsky_temple.presentation.screens.*
 import com.alexander_nevsky_temple.presentation.viewModels.ArticleVM
 import com.alexander_nevsky_temple.ui.customItems.SAction
-import com.alexander_nevsky_temple.ui.customItems.SSAction
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.qualifier.qualifier
 
@@ -21,8 +20,7 @@ import org.koin.core.qualifier.qualifier
 fun MainNavHost(
     controller: NavHostController,
     navItems: List<String>,
-    openWebsite: SAction,
-    openSomeApp: SSAction,
+    openSomeApp: SAction,
     modifier: Modifier = Modifier,
     articleVM: ArticleVM = koinViewModel(qualifier(DIStrings.ARTICLE + DIStrings.VIEWMODEL))
 ) {
@@ -37,7 +35,7 @@ fun MainNavHost(
             composable(navItems[6]) { Advices(articleVM) }
             composable(navItems[7]) { History(articleVM) }
             composable(navItems[8]) { Sacraments(articleVM) }
-            composable(navItems[9]) { Contacts(articleVM, openWebsite, openSomeApp) }
+            composable(navItems[9]) { Contacts(articleVM, openSomeApp) }
             composable(navItems[10]) { Box(modifier) { LinearProgressIndicator(Modifier.align(Alignment.Center)) } }
             composable(navItems[11]) { Volunteerism(articleVM) }
         }
