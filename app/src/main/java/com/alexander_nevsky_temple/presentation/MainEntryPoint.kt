@@ -14,7 +14,7 @@ import com.alexander_nevsky_temple.ui.customItems.*
 import kotlinx.coroutines.launch
 
 @Composable
-fun MainEntryPoint(openWebPage : SAction, openSomeApp : SSAction, navItems : List<String> = Strings.SCREEN_ROUTES) {
+fun MainEntryPoint(openSomeApp: SAction, navItems: List<String> = Strings.SCREEN_ROUTES) {
     val controller = rememberNavController()
     val drawerState = rememberDrawerState(Closed)
     val scope = rememberCoroutineScope()
@@ -34,8 +34,8 @@ fun MainEntryPoint(openWebPage : SAction, openSomeApp : SSAction, navItems : Lis
                         selected = index == selectedItemIndex,
                         onClick = { 
                             when(index) {
-                                3 -> openWebPage(Strings.SPIRITUAL_TALKS_URL)
-                                10 -> openWebPage(Strings.INFORMATION_URL)
+                                3 -> openSomeApp(Strings.SPIRITUAL_TALKS_URL)
+                                10 -> openSomeApp(Strings.INFORMATION_URL)
                                 else -> navigateTo(index, route)
                             }
                         }
@@ -51,7 +51,7 @@ fun MainEntryPoint(openWebPage : SAction, openSomeApp : SSAction, navItems : Lis
             floatingActionButton = { if(currentRoute != navItems[2]) FredFloatingActionButton({ navigateTo(2, navItems[2]) }, Icons.Outlined.CalendarMonth) },
             floatingActionButtonPosition = FabPosition.End
         ) { padding ->
-            MainNavHost(controller, navItems, openWebPage, openSomeApp, Modifier.fillMaxSize().padding(padding))
+            MainNavHost(controller, navItems, openSomeApp, Modifier.fillMaxSize().padding(padding))
         }
     }
 }
