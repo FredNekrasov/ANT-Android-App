@@ -52,9 +52,9 @@ fun FredIconButton(onClick: Action, icon: ImageVector, description: String, modi
 @Composable
 fun FredTopAppBar(openDrawer: Action) {
     TopAppBar(
-        title = { FredText(Strings.MAIN_TITLE) },
+        title = { FredText(Info.MAIN_TITLE) },
         Modifier.fillMaxWidth().border(1.dp, MaterialTheme.colorScheme.primary),
-        navigationIcon = { FredIconButton(openDrawer, Icons.Outlined.Menu, Strings.MENU) }
+        navigationIcon = { FredIconButton(openDrawer, Icons.Outlined.Menu, Info.MENU) }
     )
 }
 @Composable
@@ -75,7 +75,7 @@ fun FredFloatingActionButton(onClick: Action, icon: ImageVector) {
         modifier = Modifier.border(1.dp, MaterialTheme.colorScheme.primary, MaterialTheme.shapes.medium),
         shape = MaterialTheme.shapes.medium
     ) {
-        Icon(icon, Strings.SCHEDULE)
+        Icon(icon, Info.SCHEDULE)
     }
 }
 @Composable

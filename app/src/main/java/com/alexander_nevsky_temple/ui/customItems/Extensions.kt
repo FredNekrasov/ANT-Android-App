@@ -9,11 +9,11 @@ fun Context.displayMessage(
     message : String, duration : Int = Toast.LENGTH_SHORT
 ) = Toast.makeText(this, message, duration).show()
 fun ConnectionStatus.getMessage() = when(this) {
-    CONNECTION_ERROR -> Strings.CONNECTION_ERROR
-    NO_INTERNET -> Strings.NO_INTERNET
-    NO_DATA -> Strings.NO_DATA
-    SERIALIZATION_ERROR -> Strings.SERIALIZATION_ERROR
-    UNKNOWN -> Strings.UNKNOWN
+    CONNECTION_ERROR -> Info.CONNECTION_ERROR
+    NO_INTERNET -> Info.NO_INTERNET
+    NO_DATA -> Info.NO_DATA
+    SERIALIZATION_ERROR -> Info.SERIALIZATION_ERROR
+    UNKNOWN -> Info.UNKNOWN
     else -> ""
 }
 fun ConnectionStatus.isError() = (this != SUCCESS) && (this != LOADING)
