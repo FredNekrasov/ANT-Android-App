@@ -5,7 +5,7 @@ import com.alexander_nevsky_temple.data.local.entities.ArticleEntity
 
 @Dao
 interface IArticleDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Upsert
     suspend fun insert(article : ArticleEntity)
     @Query("SELECT * FROM Articles")
     suspend fun getAll() : List<ArticleEntity>
