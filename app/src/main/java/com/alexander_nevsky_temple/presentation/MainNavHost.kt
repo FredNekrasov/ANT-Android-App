@@ -16,6 +16,16 @@ import com.alexander_nevsky_temple.ui.customItems.SAction
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.qualifier.qualifier
 
+/**
+ * Main navigation host. It is used to navigate between screens in the application.
+ *  @param controller is the navigation controller for navigation between screens
+ *  @param navItems is a list of navigation items
+ *  @param openSomeApp is an action that opens some app
+ *  @param modifier is a modifier. By default, it is empty
+ *  @param articleVM is an article view model. By default, it is a koin view model with qualifier
+ *
+ *  @see ArticleVM
+ */
 @Composable
 fun MainNavHost(
     controller: NavHostController,

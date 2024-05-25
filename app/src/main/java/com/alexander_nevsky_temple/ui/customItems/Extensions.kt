@@ -5,6 +5,7 @@ import android.widget.Toast
 import com.alexander_nevsky_temple.domain.utils.ConnectionStatus
 import com.alexander_nevsky_temple.domain.utils.ConnectionStatus.*
 
+// Extensions functions for convenience and simplification
 fun Context.displayMessage(
     message : String, duration : Int = Toast.LENGTH_SHORT
 ) = Toast.makeText(this, message, duration).show()
@@ -18,6 +19,6 @@ fun ConnectionStatus.getMessage() = when(this) {
 }
 fun ConnectionStatus.isError() = (this != SUCCESS) && (this != LOADING)
 fun List<String>.getNotNull(index: Int): String = this.getOrNull(index).toString()
-// custom types
+// Aliases for convenience and simplification
 typealias SAction = (String) -> Unit
 typealias Action = () -> Unit

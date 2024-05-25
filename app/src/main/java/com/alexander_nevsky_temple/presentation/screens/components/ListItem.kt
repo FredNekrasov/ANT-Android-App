@@ -13,6 +13,11 @@ import androidx.compose.ui.unit.dp
 import com.alexander_nevsky_temple.domain.model.Article
 import com.alexander_nevsky_temple.ui.customItems.FredIconButton
 
+/**
+ * Shows the details of the article with a close button.
+ *  @param isShowDialog is a function that is called when the close button is clicked
+ *  @param article is the article to be shown in the details
+ */
 @Composable
 fun ListItem(
     isShowDialog: (Boolean) -> Unit,

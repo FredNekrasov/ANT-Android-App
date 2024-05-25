@@ -7,6 +7,11 @@ import org.koin.core.qualifier.named
 import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
+/**
+ * DI module for presentation layer.
+ *  - ArticleVM is used for displaying articles.
+ *  @see ArticleVM
+ */
 val vmModule = module {
     viewModel(qualifier(DIStrings.ARTICLE + DIStrings.VIEWMODEL)) {
         ArticleVM(get(named(DIStrings.ARTICLE + DIStrings.USE_CASE)))

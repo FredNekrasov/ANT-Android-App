@@ -13,6 +13,11 @@ import androidx.core.net.toUri
 import coil.compose.AsyncImage
 import com.alexander_nevsky_temple.domain.model.Article
 
+/**
+ *   Composable function that displays list of images
+ *   @param article object of [Article]. Contains list of images
+ *   @param modifier
+ */
 @Composable
 fun ImageSlider(
     article: Article,

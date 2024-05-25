@@ -9,6 +9,11 @@ import com.alexander_nevsky_temple.domain.model.Article
 import com.alexander_nevsky_temple.ui.customItems.FredText
 import com.alexander_nevsky_temple.ui.customItems.FredTitle
 
+/**
+ *   Shows the details of an [Article]. The details include: type, title, date, image, and description.
+ *   @param article is the article to be shown in the details
+ *   @param modifier is the modifier for the layout
+ */
 @Composable
 fun ListItemDetails(
     article: Article,

@@ -13,6 +13,13 @@ import androidx.navigation.compose.*
 import com.alexander_nevsky_temple.ui.customItems.*
 import kotlinx.coroutines.launch
 
+/**
+ *   Main entry point for the app.
+ *   Contains a navigation bar for moving between screens and a top bar with a menu button to open it
+ *
+ *   @param navItems is a list of routes for navigation drawer.
+ *   @param openSomeApp is an action for opening some app.
+ */
 @Composable
 fun MainEntryPoint(navItems: List<String>, openSomeApp: SAction) {
     val controller = rememberNavController()

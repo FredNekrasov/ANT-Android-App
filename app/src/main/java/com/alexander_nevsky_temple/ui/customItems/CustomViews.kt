@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import coil.compose.AsyncImage
 
+// Custom views for convenience and simplification
 @Composable
 fun FredText(text: String, modifier: Modifier = Modifier, textAlign: TextAlign = TextAlign.Justify) {
     Text(

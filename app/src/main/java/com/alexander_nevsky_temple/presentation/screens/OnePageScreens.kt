@@ -59,6 +59,13 @@ fun Sacraments(vm: ArticleVM) {
         }
     }
 }
+/**
+ *   Contacts screen with buttons for phone, telegram, vk, email.
+ *   AndroidView is used to check status of the state and display the error message
+ *
+ *   @param openSomeApp action for opening some app
+ *   @param vm ArticleVM
+ */
 @Composable
 fun Contacts(vm: ArticleVM, openSomeApp: SAction) {
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(8.dp), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -79,6 +86,11 @@ fun Contacts(vm: ArticleVM, openSomeApp: SAction) {
         }
     }
 }
+/**
+ * Contacts card with buttons for phone, telegram, vk, email
+ *  @param contentList list of the contact information
+ *  @param openSomeApp action for opening app like telegram, vk, email and phone
+ */
 @Composable
 private fun ContactsCard(contentList: List<String>, openSomeApp: SAction) {
     Row(Modifier.fillMaxWidth().wrapContentHeight(), Arrangement.SpaceEvenly, Alignment.CenterVertically) {

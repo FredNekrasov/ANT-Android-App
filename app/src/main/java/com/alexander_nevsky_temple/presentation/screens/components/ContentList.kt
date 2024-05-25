@@ -10,6 +10,11 @@ import com.alexander_nevsky_temple.domain.model.Article
 import com.alexander_nevsky_temple.domain.utils.ActionStatus
 import com.alexander_nevsky_temple.ui.customItems.FredCard
 
+/**
+ * ContentList - list of articles with [FredCard] component.
+ *  @param state is a state of articles
+ *  @param condition is a condition to filter articles in the list by [Article.articleType]
+ */
 @Composable
 fun ContentList(
     state: ActionStatus<Article>,

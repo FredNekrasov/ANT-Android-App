@@ -1,5 +1,9 @@
 package com.alexander_nevsky_temple.ui.customItems
 
+/**
+ * This class contains all the constants and strings used in the application.
+ * Defines the error messages and screen routes.
+ */
 object Info {
     const val MAIN_TITLE = "Храм Александра Невского"
     const val MENU = "Меню"

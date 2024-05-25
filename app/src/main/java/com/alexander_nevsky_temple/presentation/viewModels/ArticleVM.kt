@@ -10,6 +10,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
+/**
+ * Article view model class.
+ * When the view model is created, the init function is called.
+ * init is used to get articles from the use case and emit them to the state flow.
+ * The state flow is used in screens to display articles.
+ */
 class ArticleVM(
     private val getArticlesUseCase: GetArticlesUseCase
 ) : ViewModel() {
