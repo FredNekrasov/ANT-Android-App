@@ -9,6 +9,17 @@ import com.alexander_nevsky_temple.domain.repositories.IArticleRepository
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
+/**
+ * DI module for data layer.
+ *  - Database (ANTDb) is created on application start and is used by all repositories.
+ *  - Client (ANTClient) is created on application start and is used by all repositories.
+ *  - Repository (IArticleRepository) is used by use cases.
+ *
+ *  @see ANTDb
+ *  @see ANTClient
+ *  @see IArticleRepository
+ *  @see ArticleRepository
+ */
 val dataModule = module {
     single(qualifier = named(DIStrings.DATABASE), createdAtStart = true) {
         Room.databaseBuilder(get(), ANTDb::class.java, ANTDb.DB_NAME).build()

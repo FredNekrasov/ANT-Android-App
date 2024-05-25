@@ -27,5 +27,5 @@ object ANTClient {
             url(DEFAULT_URL)
         }
     }
-    private const val DEFAULT_URL = "http://localhost:5115/api/"
+    private const val DEFAULT_URL = "http://ip:port/api/"
 }

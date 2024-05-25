@@ -15,10 +15,22 @@ import io.ktor.client.request.get
 import io.ktor.serialization.JsonConvertException
 import kotlinx.coroutines.flow.*
 
+/**
+ * This class implements IArticleRepository interface
+ * @param articleDao is a IArticleDao interface. It is used to get data from the database and add data to the database
+ * @param client is a HttpClient. It is used to get data from the server
+ * @see IArticleRepository
+ */
 class ArticleRepository(
     private val articleDao: IArticleDao,
     private val client: HttpClient
 ) : IArticleRepository {
+    /**
+     * Get list of articles from the database and return it as a flow if there is no internet connection.
+     * If there is internet connection, get list of articles from the server and return it as a flow
+     * @see IArticleRepository.getList
+     * @return a flow of ActionStatus
+     */
     override fun getList() : Flow<ActionStatus<Article>> = flow {
         val articleList = articleDao.getAll().map { it.toModel() }
         emit(Loading(articleList))
